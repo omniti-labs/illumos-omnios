@@ -2001,6 +2001,9 @@ VIRTIO_OBJS = virtio.o
 # Virtio block driver
 VIOBLK_OBJS = vioblk.o
 
+#Virtio network driver
+VIOIF_OBJS = vioif.o
+
 #
 #	kiconv modules
 #
