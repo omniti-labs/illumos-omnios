@@ -300,7 +300,6 @@ struct vioif_softc {
 	uint64_t		sc_multircv;
 	uint64_t		sc_norecvbuf;
 	uint64_t		sc_notxbuf;
-	uint64_t		sc_toolongerr;
 	uint64_t		sc_ierrors;
 	uint64_t		sc_oerrors;
 };
@@ -1061,14 +1060,7 @@ vioif_send(struct vioif_softc *sc, mblk_t *mp)
 		mac_lso_get(mp, &lso_mss, &lso_flags);
 		lso_required = (lso_flags & HW_LSO);
 	}
-	if (!lso_required && msg_size > sc->sc_mtu) {
-		dev_err(sc->sc_dev, CE_WARN, "Message too big");
-		freemsg(mp);
 
-		sc->sc_toolongerr ++;
-		sc->sc_oerrors ++;
-		return (B_FALSE);
-	}
 	ve = vq_alloc_entry(sc->sc_tx_vq);
 
 	if (!ve) {
@@ -1122,6 +1114,14 @@ vioif_send(struct vioif_softc *sc, mblk_t *mp)
 	    buf->tb_inline_mapping.vbm_dmac.dmac_laddress,
 	    sizeof (struct virtio_net_hdr), B_TRUE);
 
+	/* meanwhile update the statistic */
+	if (mp->b_rptr[0] & 0x1) {
+		if (bcmp(mp->b_rptr, vioif_broadcast, ETHERADDRL) != 0)
+				sc->sc_multixmt ++;
+			else
+				sc->sc_brdcstxmt ++;
+	}
+
 	/*
 	 * We copy small packets into the inline buffer. The bigger ones
 	 * get mapped using the mapped buffer.
@@ -1136,13 +1136,7 @@ vioif_send(struct vioif_softc *sc, mblk_t *mp)
 	}
 
 	virtio_push_chain(ve, B_TRUE);
-	/* meanwhile update the statistic */
-	if (mp->b_rptr[0] & 0x1) {
-		if (bcmp(mp->b_rptr, vioif_broadcast, ETHERADDRL) != 0)
-				sc->sc_multixmt ++;
-			else
-				sc->sc_brdcstxmt ++;
-	}
+
 	sc->sc_opackets ++;
 	sc->sc_obytes += msg_size;
 
