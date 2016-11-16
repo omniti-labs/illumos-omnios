@@ -182,8 +182,9 @@ test_newlocale_categories(void)
 		test_failed(t, "day1 mismatch %s != %s", day, "Sonntag");
 	}
 	yes = nl_langinfo_l(YESSTR, loc);
-	if ((yes == NULL) || (strcmp(yes, "да") != 0)) {
-		test_failed(t, "currency mismatch");
+	if ((yes == NULL) || (strcmp(yes, "да:д:ДА:Д:yes:y:YES:Y") != 0)) {
+		test_failed(t, "yesstr mismatch [%s] != [%s]", yes,
+		    "да:д:ДА:Д:yes:y:YES:Y");
 	}
 	cur = nl_langinfo_l(CRNCYSTR, loc);
 	if ((cur == NULL) || (strcmp(cur, "-$") != 0)) {
@@ -216,8 +217,9 @@ test_newlocale_composite(void)
 		test_failed(t, "day1 mismatch %s != %s", day, "Sonntag");
 	}
 	yes = nl_langinfo_l(YESSTR, loc);
-	if ((yes == NULL) || (strcmp(yes, "да") != 0)) {
-		test_failed(t, "currency mismatch");
+	if ((yes == NULL) || (strcmp(yes, "да:д:ДА:Д:yes:y:YES:Y") != 0)) {
+		test_failed(t, "yesstr mismatch [%s] != [%s]", yes,
+		    "да:д:ДА:Д:yes:y:YES:Y");
 	}
 	cur = nl_langinfo_l(CRNCYSTR, loc);
 	if ((cur == NULL) || (strcmp(cur, "-$") != 0)) {
