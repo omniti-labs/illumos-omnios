@@ -191,7 +191,7 @@ init_charmap(void)
 }
 
 static void
-add_charmap_impl(char *sym, wchar_t wc, int nodups)
+add_charmap_impl(const char *sym, wchar_t wc, int nodups)
 {
 	charmap_t	srch;
 	charmap_t	*n = NULL;
@@ -232,7 +232,7 @@ add_charmap_impl(char *sym, wchar_t wc, int nodups)
 }
 
 void
-add_charmap(char *sym, int c)
+add_charmap(const char *sym, int c)
 {
 	add_charmap_impl(sym, c, 1);
 }
@@ -294,7 +294,7 @@ add_charmap_range(char *s, char *e, int wc)
 }
 
 void
-add_charmap_char(char *name, int val)
+add_charmap_char(const char *name, int val)
 {
 	add_charmap_impl(name, val, 0);
 }

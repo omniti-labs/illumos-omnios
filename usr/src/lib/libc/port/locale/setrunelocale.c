@@ -72,13 +72,13 @@ struct locdata __posix_ctype_locdata = {
 
 /*
  * Table of initializers for encodings.  When you add a new encoding type,
- * this table should be updated.
+ * this table should be updated. "NONE" is a special case and handled
+ * separately in __lc_ctype_load.
  */
 static struct {
 	const char *e_name;
 	void (*e_init)(struct lc_ctype *);
 } encodings[] = {
-	{ "NONE", _none_init },
 	{ "UTF-8",	_UTF8_init },
 	{ "EUC-CN",	_EUC_CN_init },
 	{ "EUC-JP",	_EUC_JP_init },
@@ -128,11 +128,17 @@ __lc_ctype_load(const char *name)
 	lct->lc_trans_upper = rl->__mapupper;
 	lct->lc_trans_lower = rl->__maplower;
 
-	/* set up the function pointers */
+	/*
+	 * Set up the function pointers. "NONE" is accepted either as is, or if
+	 * followed by a colon, as a prefix.
+	 */
+	if ((strcmp(rl->__encoding, "NONE") == 0) ||
+	    (strncmp(rl->__encoding, "NONE:", 5) == 0)) {
+		_none_init(lct);
+		return (ldata);
+	}
 	for (i = 0; encodings[i].e_name != NULL; i++) {
-		int l = strlen(encodings[i].e_name);
-		if ((strncmp(rl->__encoding, encodings[i].e_name, l) == 0) &&
-		    (rl->__encoding[l] == '\0' || rl->__encoding[l] == '@')) {
+		if (strcmp(rl->__encoding, encodings[i].e_name) == 0) {
 			encodings[i].e_init(lct);
 			break;
 		}

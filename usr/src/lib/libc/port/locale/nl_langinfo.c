@@ -38,6 +38,7 @@
 #include "lmonetary.h"
 #include "timelocal.h"
 #include "localeimpl.h"
+#include "runetype.h"
 
 #define	_REL(BASE) ((int)item-BASE)
 
@@ -46,8 +47,8 @@
 char *
 nl_langinfo_l(nl_item item, locale_t loc)
 {
-	char *ret, *s, *cs;
-	struct locdata *ldata;
+	char *ret;
+	const char *s;
 	const struct lc_monetary *lmon = loc->monetary;
 	const struct lc_numeric *lnum = loc->numeric;
 	const struct lc_messages *lmsgs = loc->messages;
@@ -55,25 +56,17 @@ nl_langinfo_l(nl_item item, locale_t loc)
 
 	switch (item) {
 	case CODESET:
-		ret = "";
-		/*
-		 * The codeset is the suffix of a locale, for most it will
-		 * will be UTF-8, as in "en_US.UTF-8".  Short form locales are
-		 * not supported.  Note also that although FreeBSD uses
-		 * US-ASCII, Solaris historically has reported "646" for the
-		 * C locale.
-		 *
-		 * Note that this code will need to change if we ever support
-		 * POSIX defined locale variants (suffixes with an @ sign)
-		 */
-		ldata = loc->locdata[LC_CTYPE];
-		s = ldata ? ldata->l_lname : NULL;
-		if (s != NULL) {
-			if ((cs = strchr(s, '.')) != NULL)
-				ret = cs + 1;
-			else if (strcmp(s, "C") == 0 || strcmp(s, "POSIX") == 0)
-				ret = "646";
-		}
+		s = loc->runelocale->__encoding;
+		if (strcmp(s, "NONE") == 0)
+			/*
+			 * Note that although FreeBSD uses US-ASCII, Solaris
+			 * historically has reported "646" for the C locale.
+			 */
+			ret = "646";
+		else if (strncmp(s, "NONE:", 5) == 0)
+			ret = (char *)(s + 5);
+		else
+			ret = (char *)s;
 		break;
 	case D_T_FMT:
 		ret = (char *)ltime->c_fmt;
