@@ -37,12 +37,12 @@ int
 main(void)
 {
 	char s1[8];
-	const char s2[] = { 0xa1, 0 };
+	const char s2[] = { (char)0xa1, (char)0 };
 	test_t t = test_start("strxfrm_iso8859_5");
 
 	if (!setlocale(LC_CTYPE, "ru_RU.ISO8859-5"))
 		test_failed(t, "setlocale LC_CTYPE=ru_RU.ISO8859-5 failed");
-	strxfrm(s1, s2, 0x8);
+	(void) strxfrm(s1, s2, 0x8);
 	test_passed(t);
 	return (0);
 }
