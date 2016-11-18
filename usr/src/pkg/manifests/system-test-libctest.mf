@@ -33,12 +33,7 @@ dir path=usr group=sys
 dir path=usr/lib
 dir path=usr/lib/locale
 dir path=usr/lib/locale/zz_AA.UTF-8
-dir path=usr/lib/locale/zz_AA.UTF-8/LC_COLLATE
-dir path=usr/lib/locale/zz_AA.UTF-8/LC_CTYPE
 dir path=usr/lib/locale/zz_AA.UTF-8/LC_MESSAGES
-dir path=usr/lib/locale/zz_AA.UTF-8/LC_MONETARY
-dir path=usr/lib/locale/zz_AA.UTF-8/LC_NUMERIC
-dir path=usr/lib/locale/zz_AA.UTF-8/LC_TIME
 file path=opt/libc-tests/README mode=0444
 file path=opt/libc-tests/bin/libctest mode=0555
 file path=opt/libc-tests/cfg/README mode=0444
@@ -137,14 +132,8 @@ file path=opt/libc-tests/tests/wcsrtombs_test.$(ARCH64) mode=0555
 file path=opt/libc-tests/tests/wctype_test mode=0555
 file path=opt/libc-tests/tests/wctype_test.$(ARCH) mode=0555
 file path=opt/libc-tests/tests/wctype_test.$(ARCH64) mode=0555
-file path=usr/lib/locale/zz_AA.UTF-8/LC_COLLATE/LCL_DATA mode=0444
-file path=usr/lib/locale/zz_AA.UTF-8/LC_CTYPE/LCL_DATA mode=0444
-file path=usr/lib/locale/zz_AA.UTF-8/LC_MESSAGES/LCL_DATA mode=0444
 file path=usr/lib/locale/zz_AA.UTF-8/LC_MESSAGES/SUNW_OST_OSLIB.mo mode=0444
 file path=usr/lib/locale/zz_AA.UTF-8/LC_MESSAGES/priv_names mode=0444
-file path=usr/lib/locale/zz_AA.UTF-8/LC_MONETARY/LCL_DATA mode=0444
-file path=usr/lib/locale/zz_AA.UTF-8/LC_NUMERIC/LCL_DATA mode=0444
-file path=usr/lib/locale/zz_AA.UTF-8/LC_TIME/LCL_DATA mode=0444
 hardlink path=opt/libc-tests/tests/symbols/assert_h target=setup
 hardlink path=opt/libc-tests/tests/symbols/ctype_h target=setup
 hardlink path=opt/libc-tests/tests/symbols/dirent_h target=setup
@@ -171,6 +160,16 @@ hardlink path=opt/libc-tests/tests/symbols/unistd_h target=setup
 hardlink path=opt/libc-tests/tests/symbols/wchar_h target=setup
 hardlink path=opt/libc-tests/tests/symbols/wctype_h target=setup
 license lic_CDDL license=lic_CDDL
+link path=usr/lib/locale/zz_AA.UTF-8/LC_COLLATE \
+    target=../en_US.UTF-8/LC_COLLATE
+link path=usr/lib/locale/zz_AA.UTF-8/LC_CTYPE target=../en_US.UTF-8/LC_CTYPE
+link path=usr/lib/locale/zz_AA.UTF-8/LC_MESSAGES/LCL_DATA \
+    target=../../en_US.UTF-8/LC_MESSAGES/LCL_DATA
+link path=usr/lib/locale/zz_AA.UTF-8/LC_MONETARY \
+    target=../en_US.UTF-8/LC_MONETARY
+link path=usr/lib/locale/zz_AA.UTF-8/LC_NUMERIC \
+    target=../en_US.UTF-8/LC_NUMERIC
+link path=usr/lib/locale/zz_AA.UTF-8/LC_TIME target=../en_US.UTF-8/LC_TIME
 depend fmri=locale/de type=require
 depend fmri=locale/en type=require
 depend fmri=locale/en-extra type=require
