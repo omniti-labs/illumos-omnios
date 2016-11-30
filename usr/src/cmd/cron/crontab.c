@@ -87,8 +87,7 @@
 	"     editing the crontab data - usually a minor typing error.\n\n"
 #define	BADREAD		"error reading your crontab file"
 #define	ED_PROMPT	\
-	"     Edit again, to ensure crontab information is intact (%s/%s)?\n"\
-	"     ('%s' will discard edits.)"
+	"     Edit again, to ensure crontab information is intact? "
 #define	NAMETOOLONG	"login name too long"
 #define	BAD_TZ	"Timezone unrecognized in: %s"
 #define	BAD_SHELL	"Invalid shell specified: %s"
@@ -335,8 +334,7 @@ main(int argc, char **argv)
 					if (isatty(fileno(stdin))) {
 						/* Interactive */
 						fprintf(stdout,
-						    gettext(ED_PROMPT),
-						    yesstr, nostr, nostr);
+						    gettext(ED_PROMPT));
 						fflush(stdout);
 
 						if (yes()) {

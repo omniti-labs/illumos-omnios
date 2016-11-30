@@ -116,32 +116,19 @@
 /* Locale setting */
 static int	yes(void);
 static int	rpmatch(char *s);
-static char	*yesstr = NULL;
-static char	*nostr = NULL;
 static char	*yesexpr = NULL;
 
 static char	*default_yesexpr = "^[yY]";
-static char	*default_yesstr = "yes";
-static char	*default_nostr = "no";
 
 static regex_t	re;
 
 #define	SET_DEFAULT_STRS \
 	regfree(&re); \
 	free(yesexpr); \
-	free(yesstr); \
-	free(nostr); \
-	yesexpr = default_yesexpr; \
-	yesstr = default_yesstr; \
-	nostr = default_nostr;
+	yesexpr = default_yesexpr;
 
 #define	FREE_STRS \
-	if (yesexpr != default_yesexpr) \
-		free(yesexpr); \
-	if (yesstr != default_yesstr) \
-		free(yesstr); \
-	if (nostr != default_nostr) \
-		free(nostr);
+		free(yesexpr);
 
 /* program name */
 static char	*prog_namep;
@@ -253,21 +240,15 @@ main(int argc, char **argv)
 
 	/* get yes expression according to current locale */
 	yesexpr = strdup(nl_langinfo(YESEXPR));
-	yesstr = strdup(nl_langinfo(YESSTR));
-	nostr = strdup(nl_langinfo(NOSTR));
-	if (yesexpr == NULL || yesstr == NULL || nostr == NULL) {
+	if (yesexpr == NULL)
 		return (FAILURE);
-	}
 
 	/*
 	 * If the was no expression or if there is a compile error
 	 * use default yes expression.
 	 */
 	status = regcomp(&re, yesexpr, REG_EXTENDED | REG_NOSUB);
-	if ((*yesexpr == (char)NULL) ||
-	    (*yesstr == (char)NULL) ||
-	    (*nostr == (char)NULL) ||
-	    (status != 0)) {
+	if ((*yesexpr == (char)NULL) || (status != 0)) {
 		SET_DEFAULT_STRS;
 		if (regcomp(&re, default_yesexpr,
 		    REG_EXTENDED | REG_NOSUB) != 0) {
@@ -672,7 +653,7 @@ do_create_cidl(char *raid_levelp, char *capacityp, char *disks_argp,
 	if (f_flag == FALSE) {
 		(void) fprintf(stdout, gettext("Creating RAID volume "
 		    "will destroy all data on spare space of member disks, "
-		    "proceed (%s/%s)? "), yesstr, nostr);
+		    "proceed? "));
 		if (!yes()) {
 			(void) fprintf(stdout, gettext("RAID volume "
 			    "not created.\n\n"));
@@ -830,7 +811,7 @@ do_create_ctd(char *raid_levelp, char **disks_argpp, uint32_t disks_num,
 	if (f_flag == FALSE) {
 		(void) fprintf(stdout, gettext("Creating RAID volume "
 		    "will destroy all data on spare space of member disks, "
-		    "proceed (%s/%s)? "), yesstr, nostr);
+		    "proceed? "));
 		if (!yes()) {
 			(void) fprintf(stdout, gettext("RAID volume "
 			    "not created.\n\n"));
@@ -1069,7 +1050,7 @@ do_delete(uint32_t f_flag, char **argv, uint32_t optind)
 	if (f_flag == FALSE) {
 		(void) fprintf(stdout, gettext("Deleting RAID volume "
 		    "%s will destroy all data it contains, "
-		    "proceed (%s/%s)? "), array_argp, yesstr, nostr);
+		    "proceed? "), array_argp);
 		if (!yes()) {
 			(void) fprintf(stdout, gettext("RAID Volume "
 			    "%s not deleted.\n\n"), array_argp);
@@ -1119,7 +1100,7 @@ do_flash(uint8_t f_flag, char *filep, char **ctls_argpp,
 		/* Ask user to confirm operation. */
 		if (f_flag == FALSE) {
 			(void) fprintf(stdout, gettext("Update flash image on "
-			    "controller %d (%s/%s)? "), ctl_tag, yesstr, nostr);
+			    "controller %d? "), ctl_tag);
 			if (!yes()) {
 				(void) fprintf(stdout,
 				    gettext("Controller %d not "
@@ -1408,7 +1389,7 @@ do_set_array_attr(uint32_t f_flag, char *p_argp, char **argv, uint32_t optind)
 	/* Ask user to confirm operation. */
 	if (f_flag == FALSE) {
 		(void) fprintf(stdout, gettext("Update attribute of "
-		    "array %s (%s/%s)? "), argv[optind], yesstr, nostr);
+		    "array %s? "), argv[optind]);
 		if (!yes()) {
 			(void) fprintf(stdout,
 			    gettext("Array %s not "

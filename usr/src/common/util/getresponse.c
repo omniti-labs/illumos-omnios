@@ -33,31 +33,17 @@
 #include <errno.h>
 #include "getresponse.h"
 
-/* defaults - C locale values for yesstr, nostr, yesexpr (LC_MESSAGES) */
-#define	DEFAULT_YESSTR  "yes"
-#define	DEFAULT_NOSTR   "no"
+/* defaults - C locale values for yesexpr/noexpr (LC_MESSAGES) */
 #define	DEFAULT_YESEXPR "^[yY]"
 #define	DEFAULT_NOEXPR	"^[nN]"
 
 #define	FREE_MEM        \
-	if (yesstr)     \
-		free(yesstr);   \
-	if (nostr)      \
-		free(nostr);    \
-	if (yesexpr)    \
-		free(yesexpr);  \
-	if (noexpr)     \
-		free(noexpr)
+	free(yesexpr);  \
+	free(noexpr)
 
 #define	SET_DEFAULT_STRS \
-	yesstr = DEFAULT_YESSTR; \
-	nostr = DEFAULT_NOSTR; \
 	yesexpr = DEFAULT_YESEXPR; \
 	noexpr = DEFAULT_NOEXPR;
-
-/* variables used by getresponse functions */
-char    *yesstr = NULL;
-char    *nostr = NULL;
 
 /* for regcomp()/regexec() yesexpr and noexpr */
 static regex_t preg_yes, preg_no;
@@ -79,22 +65,17 @@ init_yes(void)
 	char    *yesexpr;
 	char	*noexpr;
 
-	/* get yes expression and strings for yes/no prompts */
-	yesstr  = strdup(nl_langinfo(YESSTR));
-	nostr   = strdup(nl_langinfo(NOSTR));
 	yesexpr = strdup(nl_langinfo(YESEXPR));
 	noexpr  = strdup(nl_langinfo(NOEXPR));
 
-	if (yesstr == NULL || nostr == NULL ||
-	    yesexpr == NULL || noexpr == NULL) {
+	if (yesexpr == NULL || noexpr == NULL) {
 		FREE_MEM;
 		errno = ENOMEM;
 		return (-1);
 	}
 
 	/* if problem with locale strings, use default values */
-	if (*yesstr == '\0' || *nostr == '\0' ||
-	    *yesexpr == '\0' || *noexpr == '\0') {
+	if (*yesexpr == '\0' || *noexpr == '\0') {
 		FREE_MEM;
 		SET_DEFAULT_STRS;
 		fallback = 1;
