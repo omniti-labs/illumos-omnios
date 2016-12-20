@@ -1,4 +1,3 @@
-'\" te
 .\" Copyright (c) 1992, X/Open Company Limited  All Rights Reserved
 .\" Portions Copyright (c) 2003, Sun Microsystems, Inc.  All Rights Reserved
 .\" Portions Copyright 2013 DEY Storage Systems, Inc.
@@ -31,310 +30,235 @@
 .\" add the following below this CDDL HEADER, with the fields enclosed by
 .\" brackets "[]" replaced with your own identifying information:
 .\" Portions Copyright [yyyy] [name of copyright owner]
-.TH LOCALEDEF 1 "April 9, 2016"
-.SH NAME
-localedef \- define locale environment
-.SH SYNOPSIS
-.LP
-.nf
-\fBlocaledef\fR [\fB-c\fR] [\fB-v\fR] [\fB-U\fR\] [\fB-f\fR \fIcharmap\fR] 
-     [\fB-w\fR \fIwidthfile\fR] [\fB-i\fR \fIsourcefile\fR] 
-     [\fB-u\fR \fIcode_set_name\fR] \fIlocalename\fR
-.fi
-
-.SH DESCRIPTION
-.LP
-The \fBlocaledef\fR utility converts source definitions for locale categories
+.\"
+.\" $FreeBSD: head/usr.bin/localedef/localedef.1 290514 2015-11-07 21:07:40Z bapt $
+.\"
+.Dd November 14, 2016
+.Dt LOCALEDEF 1
+.Os
+.Sh NAME
+.Nm localedef
+.Nd define locale environment
+.Sh SYNOPSIS
+.Nm
+.Op Fl cDUv
+.Op Fl f Ar charmap
+.Op Fl i Ar sourcefile
+.Op Fl u Ar codeset
+.Op Fl w Ar widthfile
+.Ar localename
+.Sh DESCRIPTION
+The
+.Nm
+utility converts source definitions for locale categories
 into a format usable by the functions and utilities whose operational behavior
 is determined by the setting of the locale environment variables; see
-\fBenviron\fR(5).
-.sp
-.LP
+.Xr environ 7 .
+.Pp
 The utility reads source definitions for one or more locale categories
-belonging to the same locale from the file named in the \fB-i\fR option (if
-specified) or from standard input.
-.sp
-.LP
+belonging to the same locale from the file named in the
+.Fl i
+option (if specified) or from standard input.
+.Pp
 Each category source definition is identified by the corresponding environment
-variable name and terminated by an \fBEND\fR \fIcategory-name\fR statement. The
-following categories are supported.
-.sp
-.ne 2
-.na
-\fB\fBLC_CTYPE\fR\fR
-.ad
-.RS 15n
+variable name and terminated by an
+.Sy END
+.Em category-name
+statement.
+The following categories are supported:
+.Bl -tag -width ".Ev LC_MONETARY"
+.It Ev LC_CTYPE
 Defines character classification and case conversion.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fBLC_COLLATE\fR\fR
-.ad
-.RS 15n
+.It Ev LC_COLLATE
 Defines collation rules.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fBLC_MONETARY\fR\fR
-.ad
-.RS 15n
+.It Ev LC_MONETARY
 Defines the format and symbols used in formatting of monetary information.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fBLC_NUMERIC\fR\fR
-.ad
-.RS 15n
+.It Ev LC_NUMERIC
 Defines the decimal delimiter, grouping and grouping symbol for non-monetary
 numeric editing.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fBLC_TIME\fR\fR
-.ad
-.RS 15n
+.It Ev LC_TIME
 Defines the format and content of date and time information.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fBLC_MESSAGES\fR\fR
-.ad
-.RS 15n
+.It Ev LC_MESSAGES
 Defines the format and values of affirmative and negative responses.
-.RE
-
-.SH OPTIONS
-.LP
+.El
+.Pp
 The following options are supported:
-.sp
-.ne 2
-.na
-\fB\fB-c\fR\fR
-.ad
-.RS 23n
+.Bl -tag -width indent
+.It Fl c
 Creates permanent output even if warning messages have been issued.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB-v\fR\fR
-.ad
-.RS 23n
-Emit verbose debugging output on standard output.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB-U\fR\fR
-.ad
-.RS 23n
+.It Fl D
+BSD-style
+output.
+Rather than the default of creating the
+.Ar localename
+directory and creating files like
+.Pa LC_CTYPE ,
+.Pa LC_COLLATE ,
+etc.\& in that directory,
+the output file names have the format
+.Dq <localename>.<category>
+and are dumped to the current directory.
+.It Fl f Ar charmap
+Specifies the pathname of a file containing a mapping of character symbols and
+collating element symbols to actual character encodings.
+This option must be specified if symbolic names (other than collating symbols
+defined in a
+.Sy collating-symbol
+keyword) are used.
+If the
+.Fl f
+option is not present, the default character mapping will be used.
+.It Fl i Ar sourcefile
+The path name of a file containing the source definitions.
+If this option is not present, source definitions will be read from
+standard input.
+.It Fl u Ar codeset
+Specifies the name of a codeset used as the target mapping of character symbols
+and collating element symbols whose encoding values are defined in terms of the
+ISO/IEC 10646-1:2000 standard position constant values.
+See
+.Sx NOTES .
+.It Fl U
 Ignore the presence of character symbols that have no matching character
 definition.  This facilitates the use of a common locale definition file
 to be used across multiple encodings, even when some symbols are not
 present in a given encoding.
-.sp
-Support for this option is an illumos extension.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB-f\fR \fIcharmap\fR\fR
-.ad
-.RS 23n
-Specifies the pathname of a file containing a mapping of character symbols and
-collating element symbols to actual character encodings. This option must be
-specified if symbolic names (other than collating symbols defined in a
-\fBcollating-symbol\fR keyword) are used. If the \fB-f\fR option is not
-present, the default character mapping will be used.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB-w\fR \fIwidthfile\fR\fR
-.ad
-.RS 23n
+.It Fl v
+Emit verbose debugging output on standard output.
+.It Fl w Ar widthfile
 The path name of the file containing character screen width definitions.
 If not supplied, then default screen widths will be assumed, which will
 generally not account for East Asian encodings requiring more than a single
 character cell to display, nor for combining or accent marks that occupy
 no additional screen width.
-.sp
-The support for width files is an illumos extension.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB-i\fR \fIsourcefile\fR\fR
-.ad
-.RS 23n
-The path name of a file containing the source definitions. If this option is
-not present, source definitions will be read from standard input.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB-u\fR \fIcode_set_name\fR\fR
-.ad
-.RS 23n
-Specifies the name of a codeset used as the target mapping of character symbols
-and collating element symbols whose encoding values are defined in terms of the
-ISO/IEC 10646-1: 2000 standard position constant values. See NOTES.
-.RE
-
-.SH OPERANDS
-.LP
-The following operand is supported:
-.sp
-.ne 2
-.na
-\fB\fIlocalename\fR\fR
-.ad
-.RS 14n
-Identifies the locale. If the name contains one or more slash characters,
-\fIlocalename\fR will be interpreted as a path name where the created locale
-definitions will be stored. This capability may be restricted to users with
-appropriate privileges. (As a consequence of specifying one \fIlocalename\fR,
+.El
+.Pp
+The following operands are required:
+.Bl -tag -width ".Ar localename"
+.It Ar localename
+Identifies the locale.
+If the name contains one or more slash characters,
+.Ar localename
+will be interpreted as a path name where the created locale
+definitions will be stored.
+This capability may be restricted to users with appropriate privileges.
+(As a consequence of specifying one
+.Ar localename ,
 although several categories can be processed in one execution, only categories
 belonging to the same locale can be processed.)
-.RE
-
-.SH OUTPUT
-.LP
-\fBlocaledef\fR creates a directory of files that represents the locale's
-data. The contants of this directory should generally be copied into the
-appropriate subdirectory of /usr/lib/locale in order the definitions to
-be visible to programs linked with libc.
-.sp
-.SH ENVIRONMENT VARIABLES
-.LP
-See \fBenviron\fR(5) for definitions of the following environment variables
-that affect the execution of \fBlocaledef\fR: \fBLANG\fR, \fBLC_ALL\fR,
-\fBLC_COLLATE\fR, \fBLC_CTYPE\fR, \fBLC_MESSAGES\fR, and \fBNLSPATH\fR.
-.SH EXIT STATUS
-.LP
+.El
+.Sh OUTPUT
+.Nm
+creates a directory of files that represents the locale's data,
+unless instructed otherwise by the
+.Fl D (
+BSD
+output) option.
+The contants of this directory should generally be copied into the
+appropriate subdirectory of
+.Pa /usr/share/locale
+in order the definitions to be visible to programs linked with libc.
+.Sh ENVIRONMENT
+See
+.Xr environ 7
+for definitions of the following environment variables that affect the
+execution of
+.Nm :
+.Ev LANG ,
+.Ev LC_ALL ,
+.Ev LC_COLLATE ,
+.Ev LC_CTYPE ,
+.Ev LC_MESSAGES ,
+.Ev LC_MONETARY ,
+.Ev LC_MUMERIC ,
+.Ev LC_TIME ,
+and
+.Ev NLSPATH .
+.Sh EXIT STATUS
 The following exit values are returned:
-.sp
-.ne 2
-.na
-\fB\fB0\fR\fR
-.ad
-.RS 6n
+.Bl -tag -width XX
+.It 0
 No errors occurred and the locales were successfully created.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB1\fR\fR
-.ad
-.RS 6n
+.It 1
 Warnings occurred and the locales were successfully created.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB2\fR\fR
-.ad
-.RS 6n
+.It 2
 The locale specification exceeded implementation limits or the coded character
 set or sets used were not supported by the implementation, and no locale was
 created.
-.RE
-
-.sp
-.ne 2
-.na
-\fB\fB>3\fR\fR
-.ad
-.RS 6n
+.It >3
 Warnings or errors occurred and no output was created.
-.RE
-
-.sp
-.LP
+.El
+.Pp
 If an error is detected, no permanent output will be created.
-.SH FILES
-.ne 2
-.na
-\fB\fB/usr/lib/locale/\fIlocalename\fR/
-.ad
-.sp .6
-.RS 4n
-The directory containing locale data.
-.RE
-
-.SH ATTRIBUTES
-.LP
-See \fBattributes\fR(5) for descriptions of the following attributes:
-.sp
-
-.sp
-.TS
-box;
-c | c
-l | l .
-ATTRIBUTE TYPE	ATTRIBUTE VALUE
-_
-Interface Stability	Standard
-.TE
-
-.SH SEE ALSO
-.LP
-\fBlocale\fR(1), \fBiconv_open\fR(3C), \fBnl_langinfo\fR(3C),
-\fBstrftime\fR(3C), \fBattributes\fR(5), \fBcharmap\fR(5), \fBenviron\fR(5),
-\fBextensions\fR(5), \fBlocale\fR(5), \fBstandards\fR(5)
-.SH WARNINGS
-.LP
-If warnings occur, permanent output will be created if the \fB-c\fR option was
-specified. The following conditions will cause warning messages to be issued:
-.RS +4
-.TP
-.ie t \(bu
-.el o
-If a symbolic name not found in the \fIcharmap\fR file is used for the
-descriptions of the \fBLC_CTYPE\fR or \fBLC_COLLATE\fR categories (for other
-categories, this will be an error condition).
-.RE
-.RS +4
-.TP
-.ie t \(bu
-.el o
+.Sh SEE ALSO
+.Xr locale 1 ,
+.Xr iconv_open 3 ,
+.Xr nl_langinfo 3 ,
+.Xr strftime 3 ,
+.Xr environ 7
+.Sh WARNINGS
+If warnings occur, permanent output will be created if the
+.Fl c
+option was specified.
+The following conditions will cause warning messages to be issued:
+.Bl -bullet
+.It
+If a symbolic name not found in the
+.Pa charmap
+file is used for the descriptions of the
+.Sy LC_CTYPE
+or
+.Sy LC_COLLATE
+categories (for other categories, this will be an error condition).
+.It
 If optional keywords not supported by the implementation are present in the
 source.
-.RE
-.SH NOTES
-.LP
-When the \fB-u\fR option is used, the \fIcode_set_name\fR option-argument is
-interpreted as a name of a codeset to which the ISO/IEC 10646-1: 2000 standard
-position constant values are converted. Both the ISO/IEC 10646-1: 2000 standard
-position constant values and other formats (decimal, hexadecimal, or octal) are
-valid as encoding values within the charmap file. The codeset can be any
-codeset that is supported by the \fBiconv_open\fR(3C) function on the system.
-.sp
-.LP
-When conflicts occur between the charmap specification of \fIcode_set_name\fR,
-\fImb_cur_max\fR, or \fImb_cur_min\fR and the corresponding value for the
-codeset represented by the \fB-u\fR option-argument \fIcode_set_name\fR, the
-\fBlocaledef\fR utility fails as an error.
-.sp
-.LP
+.El
+.Sh NOTES
+When the
+.Fl u
+option is used, the
+.Ar codeset
+option-argument is interpreted as a name of a codeset to which the
+ISO/IEC 10646-1:2000 standard position constant values are converted.
+Both the ISO/IEC 10646-1:2000 standard position constant values and
+other formats (decimal, hexadecimal, or octal) are valid as encoding
+values within the charmap file.
+The
+.Ar codeset
+can be any codeset that is supported by the
+.Fn iconv_open 3
+function.
+.Pp
+When conflicts occur between the charmap specification of
+.Ar codeset ,
+.Em mb_cur_max ,
+or
+.Em mb_cur_min
+and the corresponding value for the codeset represented by the
+.Fl u
+option-argument
+.Ar codeset ,
+the
+.Nm
+utility fails with an error.
+.Pp
 When conflicts occur between the charmap encoding values specified for symbolic
 names of characters of the portable character set and the character encoding
 values defined by the US-ASCII, the result is unspecified.
+.Sh HISTORY
+.Nm
+was written by
+.An Garrett D'Amore
+.Aq Mt garrett@nexenta.com
+for Illumos.
+.An John Marino
+.Aq Mt draco@marino.st
+provided the alternations necessary to compile cleanly on
+.Dx .
+.An Baptiste Daroussin
+.Aq Mt bapt@FreeBSD.org
+ported it to
+.Fx
+and converted it to
+.Xr tree 3 .

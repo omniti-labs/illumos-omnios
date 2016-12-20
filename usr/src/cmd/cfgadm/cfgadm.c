@@ -47,6 +47,7 @@
 #include <sys/systeminfo.h>
 #include <ctype.h>
 #include <zone.h>
+#include <getresponse.h>
 
 #include <config_admin.h>
 #include "cfgadm.h"
@@ -68,7 +69,6 @@ static int extract_list_suboptions(char *, char **, char **, char **,
 static int message_output(void *appdata_ptr, const char *message);
 static void *config_calloc_check(size_t, size_t);
 static cfga_ap_types_t find_arg_type(const char *);
-static int yesno(char *, char *);
 
 
 static int compare_ap_id(cfga_list_data_t *, cfga_list_data_t *, match_type_t);
@@ -681,7 +681,6 @@ confirm_interactive(
 	static char yeschr[YESNO_STR_MAX + 2];
 	static char nochr[YESNO_STR_MAX + 2];
 	static int inited = 0;
-	int isyes;
 
 #ifdef lint
 	appdata_ptr = appdata_ptr;
@@ -697,52 +696,9 @@ confirm_interactive(
 		inited = 1;
 	}
 
-	do {
-		(void) fprintf(stderr, "%s (%s/%s)? ", message, yeschr, nochr);
-		isyes = yesno(yeschr, nochr);
-	} while (isyes == -1);
-	return (isyes);
-}
 
-/*
- * If any text is input it must sub-string match either yes or no.
- * Failure of this match is indicated by return of -1.
- * If an empty line is input, this is taken as no.
- */
-static int
-yesno(
-	char *yesp,
-	char *nop)
-{
-	int	i, b;
-	char	ans[YESNO_STR_MAX + 1];
-
-	i = 0;
-
-	/*CONSTCOND*/
-	while (1) {
-		b = getc(stdin);	/* more explicit that rm.c version */
-		if (b == '\n' || b == '\0' || b == EOF) {
-			if (i < YESNO_STR_MAX)	/* bug fix to rm.c version */
-				ans[i] = 0;
-			break;
-		}
-		if (i < YESNO_STR_MAX)
-			ans[i] = b;
-		i++;
-	}
-	if (i >= YESNO_STR_MAX) {
-		i = YESNO_STR_MAX;
-		ans[YESNO_STR_MAX] = 0;
-	}
-	/* changes to rm.c version follow */
-	if (i == 0)
-		return (0);
-	if (strncmp(nop, ans, i) == 0)
-		return (0);
-	if (strncmp(yesp, ans, i) == 0)
-		return (1);
-	return (-1);
+	(void) fprintf(stderr, "%s? ", message);
+	return (yes());
 }
 
 /*ARGSUSED*/

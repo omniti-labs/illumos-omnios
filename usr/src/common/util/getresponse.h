@@ -38,8 +38,6 @@ extern "C" {
 
 #define	ERR_MSG_INIT_YES "Error initializing international response strings: %s"
 
-extern char	*yesstr;
-extern char	*nostr;
 extern int	init_yes(void);
 extern int	yes(void);
 extern int	yes_check(char *);

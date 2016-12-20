@@ -1,0 +1,4 @@
+tools/ is imported from freebsd src/tools/tools/locale, and slightly modified
+for our needs. It contains tools to generate the locale input data that lives
+in the *def directories -- this data is not generated as part of the build, but
+rather stored in version control, so "tools" should not be included in  SUBDIR.

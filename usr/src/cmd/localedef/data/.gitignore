@@ -1,0 +1,12 @@
+/colldef/*.LC_COLLATE
+/colldef/*.out
+/ctypedef/*.LC_CTYPE
+/ctypedef/*.out
+/msgdef/*.LC_MESSAGES
+/msgdef/*.out
+/monetdef/*.LC_MONETARY
+/monetdef/*.out
+/numericdef/*.LC_NUMERIC
+/numericdef/*.out
+/timedef/*.LC_TIME
+/timedef/*.out

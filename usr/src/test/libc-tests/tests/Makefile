@@ -23,8 +23,10 @@ SUBDIRS = \
 	priv_gettext \
 	random \
 	strerror \
+	strxfrm \
 	symbols \
 	threads \
+	wcscoll \
 	wcsrtombs \
 	wctype
 

@@ -4017,8 +4017,8 @@ xsfile(int issysattr, int ofd)
 	if (extno != 1) {	/* starting in middle of file? */
 		(void) printf(gettext(
 		    "tar: first extent read is not #1\n"
-		    "OK to read file beginning with extent #%d (%s/%s) ? "),
-		    extno, yesstr, nostr);
+		    "OK to read file beginning with extent #%d? "),
+		    extno);
 		if (yes() == 0) {
 canit:
 			passtape();

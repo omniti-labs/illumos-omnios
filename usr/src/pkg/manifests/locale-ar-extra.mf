@@ -11,13 +11,11 @@
 #
 # Copyright 2010 Nexenta Systems, Inc.  All rights reserved.
 # Copyright 2012 Garrett D'Amore <garrett@damore.org>. All rights reserved.
-#
-
-#
-# These are extra locales (ISO8859 codesets), primarily of historical
-# interest.
+# Copyright 2015 Josef Jeff Sipek <jeffpc@josefsipek.net>
 #
 
 set name=pkg.fmri value=pkg:/locale/ar-extra@$(PKGVERS)
-set name=pkg.obsolete value=true
+set name=pkg.renamed value=true
+set name=org.opensolaris.noincorp value=true
 set name=variant.arch value=$(ARCH)
+depend fmri=pkg:/system/locale@$(PKGVERS) type=require

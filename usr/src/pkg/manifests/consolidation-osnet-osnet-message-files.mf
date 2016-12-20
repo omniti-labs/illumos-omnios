@@ -279,47 +279,49 @@ file path=usr/lib/help/profiles/locale/RtZFSFileSysMngmnt.html
 file path=usr/lib/help/profiles/locale/RtZFSStorageMngmnt.html
 file path=usr/lib/help/profiles/locale/RtZoneMngmnt.html
 file path=usr/lib/help/profiles/locale/RtZoneSecurity.html
-file path=usr/lib/locale/C/LC_MESSAGES/AMD.po
-file path=usr/lib/locale/C/LC_MESSAGES/DISK.po
-file path=usr/lib/locale/C/LC_MESSAGES/FMD.po
-file path=usr/lib/locale/C/LC_MESSAGES/FMNOTIFY.po
-file path=usr/lib/locale/C/LC_MESSAGES/GMCA.po
-file path=usr/lib/locale/C/LC_MESSAGES/INTEL.po
-file path=usr/lib/locale/C/LC_MESSAGES/NXGE.po
-file path=usr/lib/locale/C/LC_MESSAGES/PCI.po
-file path=usr/lib/locale/C/LC_MESSAGES/PCIEX.po
-file path=usr/lib/locale/C/LC_MESSAGES/SCA1000.po
-file path=usr/lib/locale/C/LC_MESSAGES/SCA500.po
-file path=usr/lib/locale/C/LC_MESSAGES/SCF.po
-file path=usr/lib/locale/C/LC_MESSAGES/SENSOR.po
-file path=usr/lib/locale/C/LC_MESSAGES/SMF.po
-file path=usr/lib/locale/C/LC_MESSAGES/STORAGE.po
-file path=usr/lib/locale/C/LC_MESSAGES/SUN4.po
-file path=usr/lib/locale/C/LC_MESSAGES/SUN4U.po
-file path=usr/lib/locale/C/LC_MESSAGES/SUN4V.po
-file path=usr/lib/locale/C/LC_MESSAGES/SUNOS.po
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_ADMIN.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_LINFO group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_NETRPC.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_OSCMD.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_OSLIB.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_SGS.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_SYSOSPAM.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_UCBCMD.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_ZONEINFO.po group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/ZFS.po
-file path=usr/lib/locale/C/LC_MESSAGES/libast group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/libcmd group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/libdll group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/libshell group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/libsum group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/magic group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/mailx.help group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/more.help group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/priv_names group=sys
-file path=usr/lib/locale/C/LC_MESSAGES/uxlibc.src group=sys
-file path=usr/lib/locale/C/LC_TIME/SUNW_OST_OSCMD.po group=sys
-file path=usr/lib/locale/C/LC_TIME/SUNW_OST_OSLIB.po group=sys
+file path=usr/lib/locale/C/LC_MESSAGES/AMD.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/DISK.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/FMD.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/FMNOTIFY.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/GMCA.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/INTEL.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/NXGE.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/PCI.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/PCIEX.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SCA1000.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SCA500.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SCF.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SENSOR.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SMF.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/STORAGE.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUN4.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUN4U.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUN4V.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNOS.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_ADMIN.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_LINFO group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_NETRPC.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_OSCMD.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_OSLIB.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_SGS.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_SYSOSPAM.po group=sys \
+    mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_UCBCMD.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/SUNW_OST_ZONEINFO.po group=sys \
+    mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/ZFS.po mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/libast group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/libcmd group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/libdll group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/libshell group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/libsum group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/magic group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/mailx.help group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/more.help group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/priv_names group=sys mode=0644
+file path=usr/lib/locale/C/LC_MESSAGES/uxlibc.src group=sys mode=0644
+file path=usr/lib/locale/C/LC_TIME/SUNW_OST_OSCMD.po group=sys mode=0644
+file path=usr/lib/locale/C/LC_TIME/SUNW_OST_OSLIB.po group=sys mode=0644
 file path=usr/share/lib/locale/com/sun/admin/pm/client/pmHelpResources.java \
     group=lp
 file path=usr/share/lib/locale/com/sun/admin/pm/client/pmResources.java \

@@ -217,18 +217,14 @@ substsearch(const struct lc_collate *lcc, const wchar_t key, int pass)
 static collate_chain_t *
 chainsearch(const struct lc_collate *lcc, const wchar_t *key, int *len)
 {
-	int low;
-	int high;
+	int low = 0;
+	int high = lcc->lc_chain_count - 1;
 	int next, compar, l;
 	collate_chain_t *p;
-	collate_chain_t *tab;
+	collate_chain_t *tab = lcc->lc_chain_table;
 
-	if (lcc->lc_info->chain_count == 0)
+	if (high < 0)
 		return (NULL);
-
-	low = 0;
-	high = lcc->lc_info->chain_count - 1;
-	tab = lcc->lc_chain_table;
 
 	while (low <= high) {
 		next = (low + high) / 2;
@@ -259,7 +255,7 @@ largesearch(const struct lc_collate *lcc, const wchar_t key)
 	collate_large_t *p;
 	collate_large_t *tab = lcc->lc_large_table;
 
-	if (lcc->lc_info->large_count == 0)
+	if (high < 0)
 		return (NULL);
 
 	while (low <= high) {
@@ -303,7 +299,10 @@ _collate_lookup(const struct lc_collate *lcc, const wchar_t *t,
 	if ((sptr = *state) != NULL) {
 		*pri = *sptr;
 		sptr++;
-		*state = *sptr ? sptr : NULL;
+		if ((sptr == *state) || (sptr == NULL))
+			*state = NULL;
+		else
+			*state = sptr;
 		*len = 0;
 		return;
 	}
@@ -364,7 +363,7 @@ _collate_lookup(const struct lc_collate *lcc, const wchar_t *t,
 	 * code ensures this for us.
 	 */
 	if ((sptr = substsearch(lcc, *pri, which)) != NULL) {
-		if ((*pri = *sptr) != 0) {
+		if ((*pri = *sptr) > 0) {
 			sptr++;
 			*state = *sptr ? sptr : NULL;
 		}
@@ -443,6 +442,7 @@ _collate_wxfrm(const struct lc_collate *lcc, const wchar_t *src, wchar_t *xf,
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					pri = COLLATE_MAX_PRIORITY;
 				}
 				if (room) {
@@ -462,6 +462,7 @@ _collate_wxfrm(const struct lc_collate *lcc, const wchar_t *src, wchar_t *xf,
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					continue;
 				}
 				if (room) {
@@ -596,6 +597,7 @@ _collate_sxfrm(const wchar_t *src, char *xf, size_t room, locale_t loc)
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					pri = COLLATE_MAX_PRIORITY;
 				}
 
@@ -622,6 +624,7 @@ _collate_sxfrm(const wchar_t *src, char *xf, size_t room, locale_t loc)
 						errno = EINVAL;
 						goto fail;
 					}
+					state = NULL;
 					continue;
 				}
 

@@ -13,8 +13,6 @@
  * specifies the terms and conditions for redistribution.
  */
 
-#pragma ident	"%Z%%M%	%I%	%E% SMI"
-
 /*
  * Compress - data compression program
  */
@@ -762,8 +760,8 @@ main(int argc, char *argv[])
 
 					(void) fprintf(stderr, gettext(
 					    " do you wish to overwr"
-					    "ite %s (%s or %s)? "),
-					    ofname, yesstr, nostr);
+					    "ite %s? "),
+					    ofname);
 					(void) fflush(stderr);
 					for (cin = 0; cin < LINE_MAX; cin++)
 						line[cin] = 0;

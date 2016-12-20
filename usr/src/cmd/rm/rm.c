@@ -365,8 +365,8 @@ rm(const char *entry, struct dlist *caller)
 		 *
 		 */
 		if (interactive && !confirm(stderr,
-		    gettext("rm: examine files in directory %s (%s/%s)? "),
-		    pathbuf, yesstr, nostr)) {
+		    gettext("rm: examine files in directory %s? "),
+		    pathbuf)) {
 			return (0);
 		}
 
@@ -384,8 +384,8 @@ rm(const char *entry, struct dlist *caller)
 		if (ontty && !interactive && !silent &&
 		    faccessat(caller->fd, entry, W_OK|X_OK, AT_EACCESS) != 0 &&
 		    !confirm(stderr,
-		    gettext("rm: examine files in directory %s (%s/%s)? "),
-		    pathbuf, yesstr, nostr)) {
+		    gettext("rm: examine files in directory %s? "),
+		    pathbuf)) {
 			return (0);
 		}
 #endif
@@ -418,8 +418,8 @@ rm(const char *entry, struct dlist *caller)
  * where j=ja, n=nein, <filename>=the file to be removed
  */
 				if (!confirm(stderr,
-				    gettext("rm: remove %s (%s/%s)? "),
-				    pathbuf, yesstr, nostr)) {
+				    gettext("rm: remove %s? "),
+				    pathbuf)) {
 					errcnt++;
 					return (0);
 				}
@@ -494,8 +494,8 @@ unlinkit:
 	 * If interactive, ask for acknowledgement.
 	 */
 	if (interactive) {
-		if (!confirm(stderr, gettext("rm: remove %s (%s/%s)? "),
-		    pathbuf, yesstr, nostr)) {
+		if (!confirm(stderr, gettext("rm: remove %s? "),
+		    pathbuf)) {
 			return (0);
 		}
 	} else if (!silent && flag == 0) {
@@ -517,8 +517,8 @@ unlinkit:
 		if (ontty && !S_ISLNK(temp.st_mode) &&
 		    faccessat(caller->fd, entry, W_OK, AT_EACCESS) != 0 &&
 		    !confirm(stdout,
-		    gettext("rm: %s: override protection %o (%s/%s)? "),
-		    pathbuf, temp.st_mode & 0777, yesstr, nostr)) {
+		    gettext("rm: %s: override protection %o? "),
+		    pathbuf, temp.st_mode & 0777)) {
 			return (0);
 		}
 	}

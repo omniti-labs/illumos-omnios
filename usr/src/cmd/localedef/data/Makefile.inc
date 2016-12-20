@@ -1,0 +1,1 @@
+SHAREDIR=	/usr/lib
